@@ -2,37 +2,49 @@ import { useState } from "react";
 import { supabase } from "./supabase";
 import "./App.css";
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function Waitlist() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email) return;
+    if (!EMAIL_RE.test(email)) {
+      setError("Please enter a valid email.");
+      return;
+    }
+    setError(null);
     setLoading(true);
     try {
       const { error } = await supabase.from("waitlist").insert({ email });
-      console.log("waitlist signup", email, error);
       if (error) throw error;
       setDone(true);
-      setLoading(false);
     } catch (err) {
       console.error(err);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <form className="waitlist" onSubmit={submit}>
-      <input
-        type="email"
-        placeholder="you@company.com"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button className="btn btn-primary" disabled={loading}>
-        {done ? "On the list ✓" : "Join waitlist"}
-      </button>
+      <div className="waitlist-row">
+        <input
+          type="email"
+          placeholder="you@company.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          aria-label="Email address"
+        />
+        <button className="btn btn-primary" disabled={loading}>
+          {done ? "On the list ✓" : "Join waitlist"}
+        </button>
+      </div>
+      {error && <p className="waitlist-error">{error}</p>}
     </form>
   );
 }
