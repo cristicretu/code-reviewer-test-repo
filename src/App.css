@@ -245,6 +245,12 @@ main {
   font-size: 13px;
 }
 
+.focus-error {
+  margin-top: 14px;
+  color: #d4504e;
+  font-size: 13px;
+}
+
 .features {
   padding: 64px 0;
   border-top: 1px solid var(--border);
