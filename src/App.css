@@ -159,6 +159,42 @@ main {
   background: var(--surface);
 }
 
+.waitlist {
+  max-width: 420px;
+  margin: 0 auto 28px;
+}
+
+.waitlist-row {
+  display: flex;
+  gap: 8px;
+}
+
+.waitlist-error {
+  color: #d4504e;
+  font-size: 13px;
+  margin: 8px 0 0;
+  text-align: left;
+}
+
+.waitlist input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  outline: none;
+}
+
+.waitlist input:focus {
+  border-color: var(--fg);
+}
+
+.waitlist button {
+  white-space: nowrap;
+}
+
 .hero-meta {
   font-size: 13px;
   color: var(--muted);

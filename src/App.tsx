@@ -1,4 +1,53 @@
+import { useState } from "react";
+import { supabase } from "./supabase";
 import "./App.css";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function Waitlist() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!EMAIL_RE.test(email)) {
+      setError("Please enter a valid email.");
+      return;
+    }
+    setError(null);
+    setLoading(true);
+    try {
+      const { error } = await supabase.from("waitlist").insert({ email });
+      if (error) throw error;
+      setDone(true);
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <form className="waitlist" onSubmit={submit}>
+      <div className="waitlist-row">
+        <input
+          type="email"
+          placeholder="you@company.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          aria-label="Email address"
+        />
+        <button className="btn btn-primary" disabled={loading}>
+          {done ? "On the list ✓" : "Join waitlist"}
+        </button>
+      </div>
+      {error && <p className="waitlist-error">{error}</p>}
+    </form>
+  );
+}
 
 const features = [
   {
@@ -69,14 +118,7 @@ function App() {
             Halcyon is the calm operating layer for your workday. Block the noise,
             tune the room, and ship the thing you've been putting off.
           </p>
-          <div className="hero-actions">
-            <a className="btn btn-primary" href="#pricing">
-              Start free trial
-            </a>
-            <a className="btn btn-ghost" href="#features">
-              See how it works
-            </a>
-          </div>
+          <Waitlist />
           <p className="hero-meta">
             Loved by 14,000+ builders at Linear, Vercel, Figma, and more.
           </p>
