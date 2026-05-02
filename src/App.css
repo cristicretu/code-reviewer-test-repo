@@ -201,6 +201,50 @@ main {
   margin: 0;
 }
 
+.focus {
+  text-align: center;
+  padding: 32px 0 72px;
+}
+
+.focus-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #2ecc71;
+  box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.18);
+}
+
+.timer {
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(64px, 10vw, 120px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  margin: 0 0 24px;
+  line-height: 1;
+}
+
+.focus-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.focus-saved {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .features {
   padding: 64px 0;
   border-top: 1px solid var(--border);
