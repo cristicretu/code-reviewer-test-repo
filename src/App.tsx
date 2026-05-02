@@ -1,4 +1,41 @@
+import { useState } from "react";
+import { supabase } from "./supabase";
 import "./App.css";
+
+function Waitlist() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email) return;
+    setLoading(true);
+    try {
+      const { error } = await supabase.from("waitlist").insert({ email });
+      console.log("waitlist signup", email, error);
+      if (error) throw error;
+      setDone(true);
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  return (
+    <form className="waitlist" onSubmit={submit}>
+      <input
+        type="email"
+        placeholder="you@company.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <button className="btn btn-primary" disabled={loading}>
+        {done ? "On the list ✓" : "Join waitlist"}
+      </button>
+    </form>
+  );
+}
 
 const features = [
   {
@@ -69,14 +106,7 @@ function App() {
             Halcyon is the calm operating layer for your workday. Block the noise,
             tune the room, and ship the thing you've been putting off.
           </p>
-          <div className="hero-actions">
-            <a className="btn btn-primary" href="#pricing">
-              Start free trial
-            </a>
-            <a className="btn btn-ghost" href="#features">
-              See how it works
-            </a>
-          </div>
+          <Waitlist />
           <p className="hero-meta">
             Loved by 14,000+ builders at Linear, Vercel, Figma, and more.
           </p>
