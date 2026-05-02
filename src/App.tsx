@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "./supabase";
+import { FocusTimer } from "./FocusTimer";
 import "./App.css";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -123,6 +124,8 @@ function App() {
             Loved by 14,000+ builders at Linear, Vercel, Figma, and more.
           </p>
         </section>
+
+        <FocusTimer />
 
         <section className="features" id="features">
           <h2>Built for the way good work actually happens.</h2>
