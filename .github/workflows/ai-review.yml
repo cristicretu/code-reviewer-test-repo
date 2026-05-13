@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
 
       - name: AI Code Review
-        uses: cristicretu/code-reviewer@v1
+        uses: cristicretu/code-reviewer@efdba5f9c8e2d7af58f6a730fff67529c0f1ff3f
         with:
           model-api-base: ${{ secrets.MODEL_API_BASE }}
           model-id: ${{ secrets.MODEL_ID }}
