@@ -29,4 +29,4 @@ jobs:
           model-api-base: ${{ secrets.MODEL_API_BASE }}
           model-id: ${{ secrets.MODEL_ID }}
           model-api-key: ${{ secrets.MODEL_API_KEY }}
-          max-agent-steps: '20'
+          max-agent-steps: '8'
