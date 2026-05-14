@@ -15,7 +15,7 @@ concurrency:
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 60
     steps:
       - name: Checkout PR head
         uses: actions/checkout@v4
@@ -24,9 +24,10 @@ jobs:
           fetch-depth: 0
 
       - name: AI Code Review
-        uses: cristicretu/code-reviewer@v1
+        uses: cristicretu/code-reviewer@main
         with:
           model-api-base: ${{ secrets.MODEL_API_BASE }}
           model-id: ${{ secrets.MODEL_ID }}
           model-api-key: ${{ secrets.MODEL_API_KEY }}
-          max-agent-steps: '8'
+          max-agent-steps: '100'
+          comment-budget: '30'
